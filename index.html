@@ -83,19 +83,46 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <h1 id="88-合并两个有序数组"><a href="#88-合并两个有序数组" class="headerlink" title="88.合并两个有序数组"></a>88.合并两个有序数组</h1><h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p><img src="https://github.com/zenggfhcs/Picture/blob/main/88/88%E9%A2%98%E7%9B%AE.png"></p>
-<h3 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h3><p><img src="https://github.com/zenggfhcs/Picture/blob/main/88/88.%E6%8F%90%E7%A4%BA.png"></p>
-<h3 id="我的代码"><a href="#我的代码" class="headerlink" title="我的代码"></a>我的代码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public void merge(int[] nums1, int m, int[] nums2, int n) &#123;</span><br><span class="line">        int i=0;</span><br><span class="line">        int j=0;</span><br><span class="line">        int k;</span><br><span class="line">        while(j&lt;n&amp;&amp;i&lt;m+n)&#123;</span><br><span class="line">            if(nums2[j]&lt;nums1[i])&#123;</span><br><span class="line">                for(k=j+m;k&gt;i;k--)&#123;</span><br><span class="line">                    nums1[k]=nums1[k-1];</span><br><span class="line">                &#125;</span><br><span class="line">                nums1[i]=nums2[j];</span><br><span class="line">                j++;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        while(j&lt;n)&#123;</span><br><span class="line">            nums1[m+j]=nums2[j++];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="88-合并两个有序数组"><a href="#88-合并两个有序数组" class="headerlink" title="88.合并两个有序数组"></a>88.合并两个有序数组</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><blockquote>
+<p>给你两个按 非递减顺序 排列的整数数组 nums1 和 nums2，另有两个整数 m 和 n ，分别表示 nums1 和 nums2 中的元素数目。</p>
+</blockquote>
+<blockquote>
+<p>请你 合并 nums2 到 nums1 中，使合并后的数组同样按 非递减顺序 排列。</p>
+</blockquote>
+<blockquote>
+<p>注意：最终，合并后数组不应由函数返回，而是存储在数组 nums1 中。<br>为了应对这种情况，nums1 的初始长度为 m + n，其中前 m 个元素表示应合并的元素，后 n 个元素为 0 ，应忽略。nums2 的长度为 n 。</p>
+</blockquote>
+<h2 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h2><blockquote>
+<p>nums1.length &#x3D;&#x3D; m + n<br>nums2.length &#x3D;&#x3D; n<br>0 &lt;&#x3D; m, n &lt;&#x3D; 200<br>1 &lt;&#x3D; m + n &lt;&#x3D; 200<br>-10^9 &lt;&#x3D; nums1[i], nums2[j] &lt;&#x3D; 10^9</p>
+</blockquote>
+<h2 id="我的代码"><a href="#我的代码" class="headerlink" title="我的代码"></a>我的代码</h2><hr>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public void merge(int[] nums1, int m, int[] nums2, int n) &#123;</span><br><span class="line">        //三指针 实现插入排序</span><br><span class="line">        int i=0;</span><br><span class="line">        int j=0;</span><br><span class="line">        int k;</span><br><span class="line">        while(j&lt;n&amp;&amp;i&lt;m+n)&#123;</span><br><span class="line">            if(nums2[j]&lt;nums1[i])&#123;</span><br><span class="line">                for(k=j+m;k&gt;i;k--)&#123;</span><br><span class="line">                    nums1[k]=nums1[k-1];</span><br><span class="line">                &#125;</span><br><span class="line">                nums1[i]=nums2[j];</span><br><span class="line">                j++;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        while(j&lt;n)&#123;</span><br><span class="line">            nums1[m+j]=nums2[j++];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <hr>
 <blockquote>
-<p>过度重视排序，忽略数组已是有序</p>
+<p>过度重视排序，忽略数组已是有序，再次排序提高了时间</p>
 </blockquote>
 <hr>
+<h2 id="官方题解"><a href="#官方题解" class="headerlink" title="官方题解"></a>官方题解</h2><hr>
+<h3 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public void merge(int[] nums1, int m, int[] nums2, int n) &#123;</span><br><span class="line">        int p1 = 0, p2 = 0;</span><br><span class="line">        int[] sorted = new int[m + n];</span><br><span class="line">        int cur;</span><br><span class="line">        while (p1 &lt; m || p2 &lt; n) &#123;</span><br><span class="line">            if (p1 == m) &#123;</span><br><span class="line">                cur = nums2[p2++];</span><br><span class="line">            &#125; else if (p2 == n) &#123;</span><br><span class="line">                cur = nums1[p1++];</span><br><span class="line">            &#125; else if (nums1[p1] &lt; nums2[p2]) &#123;</span><br><span class="line">                cur = nums1[p1++];</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                cur = nums2[p2++];</span><br><span class="line">            &#125;</span><br><span class="line">            sorted[p1 + p2 - 1] = cur;</span><br><span class="line">        &#125;</span><br><span class="line">        for (int i = 0; i != m + n; ++i) &#123;</span><br><span class="line">            nums1[i] = sorted[i];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<blockquote>
+<p>需要建立（m+n）长数组，空间需求较大</p>
+</blockquote>
+<hr>
+<h3 id="逆向双指针"><a href="#逆向双指针" class="headerlink" title="逆向双指针"></a>逆向双指针</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public void merge(int[] nums1, int m, int[] nums2, int n) &#123;</span><br><span class="line">        int p1 = m - 1, p2 = n - 1;</span><br><span class="line">        int tail = m + n - 1;</span><br><span class="line">        int cur;</span><br><span class="line">        while (p1 &gt;= 0 || p2 &gt;= 0) &#123;</span><br><span class="line">            if (p1 == -1) &#123;</span><br><span class="line">                cur = nums2[p2--];</span><br><span class="line">            &#125; else if (p2 == -1) &#123;</span><br><span class="line">                cur = nums1[p1--];</span><br><span class="line">            &#125; else if (nums1[p1] &gt; nums2[p2]) &#123;</span><br><span class="line">                cur = nums1[p1--];</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                cur = nums2[p2--];</span><br><span class="line">            &#125;</span><br><span class="line">            nums1[tail--] = cur;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<blockquote>
+<p>由于num1中预留了足够的空间不会产生元素未排序而被覆盖的情况</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>对排序相关不够熟悉</p>
+</blockquote>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/04/26/88/" data-id="cl2gzsbtc0001ccuk0v4a02lx" data-title="" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/04/26/88/" data-id="cl2hlqx4c0000hwukh1gqaw39" data-title="" class="article-share-link">Share</a>
       
       
       
@@ -146,7 +173,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2022/04/26/hello-world/" data-id="cl2gzsbt60000ccukfndh18s0" data-title="Hello World" class="article-share-link">Share</a>
+      <a data-url="http://example.com/2022/04/26/hello-world/" data-id="cl2hlqx4j0001hwuk0ab9etk0" data-title="Hello World" class="article-share-link">Share</a>
       
       
       
